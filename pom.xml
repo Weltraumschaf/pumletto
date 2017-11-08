@@ -20,6 +20,10 @@
     <url></url>
 
     <properties>
+        <project.build.mainClass>de.weltraumschaf.pumletto.CliApplication
+        </project.build.mainClass>
+        <project.bin.executable>pumletto</project.bin.executable>
+
         <commons.version>2.2.0</commons.version>
     </properties>
 
@@ -30,4 +34,69 @@
             <version>${commons.version}</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+
+                <executions>
+                    <execution>
+                        <id>make-executable-jar</id>
+                        <phase>package</phase>
+
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+
+                        <configuration>
+                            <archive>
+                                <manifest>
+                                    <mainClass>${project.build.mainClass}</mainClass>
+                                </manifest>
+                            </archive>
+
+                            <descriptorRefs>
+                                <descriptorRefs>jar-with-dependencies</descriptorRefs>
+                            </descriptorRefs>
+
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <attach>true</attach>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+
+                <executions>
+                    <execution>
+                        <id>generate-binaries</id>
+                        <phase>pre-integration-test</phase>
+
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+
+                        <configuration>
+                            <target>
+                                <concat destfile="${project.build.directory}/${project.bin.executable}"
+                                        binary="yes">
+                                    <fileset
+                                            file="${project.main.scripts.directory}/${project.bin.executable}.sh"/>
+                                    <fileset
+                                            file="${project.build.directory}/${project.build.finalName}.jar"/>
+                                </concat>
+                                <chmod perm="ugo+rx">
+                                    <fileset
+                                            file="${project.build.directory}/${project.bin.executable}"/>
+                                </chmod>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
