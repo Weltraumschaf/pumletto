@@ -27,6 +27,7 @@
         <project.bin.executable>pumletto</project.bin.executable>
 
         <commons.version>2.2.0</commons.version>
+        <plantuml.version>1.2017.18</plantuml.version>
     </properties>
 
     <dependencies>
@@ -46,6 +47,12 @@
             <groupId>de.weltraumschaf.commons</groupId>
             <artifactId>validate</artifactId>
             <version>${commons.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sourceforge.plantuml</groupId>
+            <artifactId>plantuml</artifactId>
+            <version>${plantuml.version}</version>
         </dependency>
 
         <dependency>
