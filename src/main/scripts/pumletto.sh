@@ -23,5 +23,5 @@ if test -n "$JAVA_HOME"; then
     java="$JAVA_HOME/bin/java"
 fi
 
-exec "$java" ${jvm_options} -jar "${program}" "$@"
+exec "$java" ${jvm_options} -cp "$JAVA_HOME/lib/tools.jar:${program}" de.weltraumschaf.pumletto.CliApplication "$@"
 exit 1
