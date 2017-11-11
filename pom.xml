@@ -16,7 +16,7 @@
     <packaging>jar</packaging>
 
     <name>Pumletto</name>
-    <description></description>
+    <description>Command line tool to generate PlantUML files from sources.</description>
     <url>https://github.com/Weltraumschaf/pumletto</url>
 
     <properties>
@@ -96,7 +96,6 @@
                                 <descriptorRefs>jar-with-dependencies</descriptorRefs>
                             </descriptorRefs>
 
-                            <appendAssemblyId>false</appendAssemblyId>
                             <attach>true</attach>
                         </configuration>
                     </execution>
@@ -119,14 +118,11 @@
                             <target>
                                 <concat destfile="${project.build.directory}/${project.bin.executable}"
                                         binary="yes">
-                                    <fileset
-                                            file="${project.main.scripts.directory}/${project.bin.executable}.sh"/>
-                                    <fileset
-                                            file="${project.build.directory}/${project.build.finalName}.jar"/>
+                                    <fileset file="${project.main.scripts.directory}/${project.bin.executable}.sh"/>
+                                    <fileset file="${project.build.directory}/${project.build.finalName}-jar-with-dependencies.jar"/>
                                 </concat>
                                 <chmod perm="ugo+rx">
-                                    <fileset
-                                            file="${project.build.directory}/${project.bin.executable}"/>
+                                    <fileset file="${project.build.directory}/${project.bin.executable}"/>
                                 </chmod>
                             </target>
                         </configuration>
