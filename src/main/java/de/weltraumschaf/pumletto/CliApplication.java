@@ -40,7 +40,6 @@ public final class CliApplication extends InvokableAdapter {
 
     @Override
     public void execute() throws Exception {
-        debug = true;
         final CliOptions options = new CliOptions();
         final JCommander parser = new JCommander(options);
         parser.parse(getArgs());
