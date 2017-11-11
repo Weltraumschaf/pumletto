@@ -1,12 +1,9 @@
 package de.weltraumschaf.pumletto;
 
-import com.beust.jcommander.JCommander;
-import com.sun.javadoc.*;
+import com.sun.tools.javadoc.Main;
 import de.weltraumschaf.commons.application.ApplicationException;
 import de.weltraumschaf.commons.application.InvokableAdapter;
-import com.sun.tools.javadoc.Main;
-import de.weltraumschaf.commons.system.ExitCode;
-import nl.talsmasoftware.umldoclet.UMLDoclet;
+import de.weltraumschaf.commons.jcommander.JCommanderImproved;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -20,6 +17,11 @@ import java.util.Collection;
  * @since 1.0.0
  */
 public final class CliApplication extends InvokableAdapter {
+    private static final String USAGE = "-s|--source <file or dir> [--subpackages <subpackage>] [-h|--help]";
+    private static final String DESCRIPTIONS = "Command line tool to generate PlantUML files from sources.";
+    private static final String EXAMPLE = "pumletto -s ~/some-project/src/main/java --subpackages de";
+    private final JCommanderImproved<CliOptions> cliArgs = new JCommanderImproved<>("pumletto", CliOptions.class);
+
     /**
      * Dedicated constructor.
      *
@@ -40,9 +42,18 @@ public final class CliApplication extends InvokableAdapter {
 
     @Override
     public void execute() throws Exception {
-        final CliOptions options = new CliOptions();
-        final JCommander parser = new JCommander(options);
-        parser.parse(getArgs());
+        final CliOptions options = cliArgs.gatherOptions(getArgs());
+
+        if (options.isHelp()) {
+            cliArgs.helpMessage(USAGE, DESCRIPTIONS, EXAMPLE);
+            return;
+        }
+
+        // https://docs.oracle.com/javase/8/docs/technotes/guides/javadoc/standard-doclet.html#runningprogrammatically
+        Main.execute("javadoc", Analyzer.class.getName(), generateJavadocArguments(options));
+    }
+
+    private String[] generateJavadocArguments(final CliOptions options) throws ApplicationException {
         // https://docs.oracle.com/javase/8/docs/technotes/tools/unix/javadoc.html
         final Collection<String> javadocOptions = new ArrayList<>();
 
@@ -60,24 +71,6 @@ public final class CliApplication extends InvokableAdapter {
             javadocOptions.add(options.getSource());
         }
 
-        Main.execute("javadoc", Analyzer.class.getName(), javadocOptions.toArray(new String[javadocOptions.size()]));
-    }
-
-    // https://stackoverflow.com/questions/24727110/javadoc-source-file-parsing
-    // https://docs.oracle.com/javase/8/docs/technotes/guides/javadoc/standard-doclet.html#runningprogrammatically
-    public static final class Analyzer extends Doclet {
-
-        public static boolean start(RootDoc root) {
-            return new UMLDoclet(root).generateUMLDiagrams();
-        }
-    }
-
-    public  enum ExitCodes implements ExitCode {
-        FATAL;
-
-        @Override
-        public int getCode() {
-            return 255;
-        }
+        return javadocOptions.toArray(new String[javadocOptions.size()]);
     }
 }
