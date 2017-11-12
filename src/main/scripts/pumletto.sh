@@ -23,5 +23,9 @@ if test -n "$JAVA_HOME"; then
     java="$JAVA_HOME/bin/java"
 fi
 
+if [ -n "${PUMLETTO_DEBUG}" ] && [ "true" == "${PUMLETTO_DEBUG}" ] ; then
+    jvm_options=" -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005"
+fi
+
 exec "$java" ${jvm_options} -cp "$JAVA_HOME/lib/tools.jar:${program}" de.weltraumschaf.pumletto.CliApplication "$@"
 exit 1
