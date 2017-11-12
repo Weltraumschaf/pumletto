@@ -13,6 +13,14 @@ After that you have a binary `pumletto` in directory `target`.
 
 ## Examples
 
+Generate the PlantUML files from a source directory with a root package named `de`:
+ 
 ```
 $> pumletto -s ~/some-project/src/main/java --subpackages de
+```
+
+Generate the PlantUML files from a source directory with a root package named `de` and SVG images:
+
+```
+$> pumletto -s ~/some-project/src/main/java --subpackages de -f SVG
 ```
