@@ -4,6 +4,7 @@ import com.sun.tools.javadoc.Main;
 import de.weltraumschaf.commons.application.ApplicationException;
 import de.weltraumschaf.commons.application.InvokableAdapter;
 import de.weltraumschaf.commons.jcommander.JCommanderImproved;
+import nl.talsmasoftware.umldoclet.UMLDoclet;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -51,7 +52,7 @@ public final class CliApplication extends InvokableAdapter {
         }
 
         // https://docs.oracle.com/javase/8/docs/technotes/guides/javadoc/standard-doclet.html#runningprogrammatically
-        Main.execute("javadoc", Analyzer.class.getName(), generateJavadocArguments(options));
+        Main.execute("javadoc", UMLDoclet.class.getName(), generateJavadocArguments(options));
     }
 
     private String[] generateJavadocArguments(final CliOptions options) throws ApplicationException {
@@ -71,6 +72,11 @@ public final class CliApplication extends InvokableAdapter {
         } else {
             javadocOptions.add(options.getSource());
         }
+
+        javadocOptions.add("-umlImageFormat");
+        javadocOptions.add("SVG");
+        javadocOptions.add("-umlSkipStandardDoclet");
+        javadocOptions.add("true");
 
         return javadocOptions.toArray(new String[javadocOptions.size()]);
     }
