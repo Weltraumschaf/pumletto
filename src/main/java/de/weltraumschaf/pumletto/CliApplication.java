@@ -42,10 +42,11 @@ public final class CliApplication extends InvokableAdapter {
 
     @Override
     public void execute() throws Exception {
+        debug = true;
         final CliOptions options = cliArgs.gatherOptions(getArgs());
 
         if (options.isHelp()) {
-            cliArgs.helpMessage(USAGE, DESCRIPTIONS, EXAMPLE);
+            getIoStreams().print(cliArgs.helpMessage(USAGE, DESCRIPTIONS, EXAMPLE));
             return;
         }
 

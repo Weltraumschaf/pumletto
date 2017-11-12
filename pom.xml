@@ -23,10 +23,9 @@
         <project.build.version.source>1.8</project.build.version.source>
         <project.build.version.target>1.8</project.build.version.target>
 
-        <project.build.mainClass>de.weltraumschaf.pumletto.CliApplication</project.build.mainClass>
         <project.bin.executable>pumletto</project.bin.executable>
 
-        <commons.version>2.2.0</commons.version>
+        <commons.version>2.2.1-SNAPSHOT</commons.version>
         <plantuml.version>1.2017.18</plantuml.version>
     </properties>
 
