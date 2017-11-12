@@ -2,6 +2,8 @@
 
 Experimental CLI tool to generate [PlantUML](http://plantuml.com/) files from Java sources.
 
+This tool is based on the [UMLDoclet](https://github.com/talsma-ict/umldoclet). It is just a wrapper so you can invoke it easily without setting up a Maven or Ant build script or even figure out how to call the `javadoc` tool the right way.
+
 ## Build from Source
 
 ```
