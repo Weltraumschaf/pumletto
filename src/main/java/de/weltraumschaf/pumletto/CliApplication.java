@@ -73,8 +73,11 @@ public final class CliApplication extends InvokableAdapter {
             javadocOptions.add(options.getSource());
         }
 
-        javadocOptions.add("-umlImageFormat");
-        javadocOptions.add("SVG");
+        if (!options.getFormat().isEmpty()) {
+            javadocOptions.add("-umlImageFormat");
+            javadocOptions.add(options.getFormat());
+        }
+
         javadocOptions.add("-umlSkipStandardDoclet");
         javadocOptions.add("true");
 

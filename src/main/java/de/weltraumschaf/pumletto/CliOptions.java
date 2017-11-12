@@ -10,8 +10,6 @@ import com.beust.jcommander.Parameter;
  */
 @SuppressWarnings( {"FieldCanBeLocal", "WeakerAccess"})
 public final class CliOptions {
-    @Parameter(names = {"-h", "--help"}, help = true)
-    private boolean help;
 
     @Parameter(names = {"-s", "--source"}, description = "File or directory to process.", required = true)
     private String source = "";
@@ -19,6 +17,11 @@ public final class CliOptions {
     @Parameter(names = {"--subpackages"}, description = "Required if source is a directory.")
     private String subpackages = "";
 
+    @Parameter(names = {"-f", "--format"}, description = "The image format to generate from the puml files. If not set only the puml files will be generated. Supported are: PNG, SVG, EPS, LATEX.")
+    private String format = "";
+
+    @Parameter(names = {"-h", "--help"}, help = true)
+    private boolean help;
 
     /**
      * The sources to generate UML for.
@@ -38,6 +41,18 @@ public final class CliOptions {
      */
     String getSubpackages() {
         return subpackages;
+    }
+
+    /**
+     * The wanted image format.
+     * <p>
+     * By default empty which means no image generation.
+     * </p>
+     *
+     * @return never {@code null}, maybe empty
+     */
+    String getFormat() {
+        return format;
     }
 
     /**
