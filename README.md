@@ -8,10 +8,21 @@ This tool is based on the [UMLDoclet](https://github.com/talsma-ict/umldoclet). 
 
 ```
 $> cd pumletto
-$> mvn clean intsall
+$> mvn clean install
 ```
 
 After that you have a binary `pumletto` in directory `target`.
+
+*IMPORTANT*: To build from source you need two of my projects because Pumletto depend on them as snapshot version:
+
+- https://github.com/Weltraumschaf/organization
+- https://github.com/Weltraumschaf/commons
+
+You have to check them out and them build first!
+
+## Binary Distribution
+
+You can download the latest binary distribution here: [Download Pumletto binary](https://github.com/Weltraumschaf/pumletto/blob/master/dist/pumletto).
 
 ## Examples
 
